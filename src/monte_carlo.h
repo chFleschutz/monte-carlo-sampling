@@ -50,7 +50,7 @@ private:
 	std::function<float(float)> m_f;	// Function to integrate
 	std::function<float(float)> m_pdf;	// Probability density function
 
-	std::random_device rd;
-	std::mt19937 gen{ rd() };
+	inline static std::random_device rd;
+	inline static std::mt19937 gen{ rd() };
 	std::uniform_real_distribution<float> dis{ 0.0f, 1.0f };
 };
