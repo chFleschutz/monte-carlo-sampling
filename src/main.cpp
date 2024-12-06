@@ -9,7 +9,6 @@
 template<size_t N>
 static void estimate(MonteCarlo& mc, std::array<int, N> sampleCounts)
 {
-
 	for (auto samples : sampleCounts)
 	{
 		ScopeTimer<std::chrono::microseconds> timer;
@@ -74,5 +73,13 @@ auto main() -> int
 		estimate(mc, sampleCounts);
 	}
 
+	std::cout << "\nPerfect PDF\n";
+	{
+		auto perfect_pdf = f;
+		MonteCarlo mc(f, perfect_pdf);
+		estimate(mc, sampleCounts);
+	}
+
+	std::cin.get();
 	return 0;
 }
