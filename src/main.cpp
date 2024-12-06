@@ -1,57 +1,10 @@
+#include <array>
 #include <cmath>
 #include <format>
-#include <functional>
 #include <iostream>
-#include <random>
-#include <array>
 
+#include "monte_carlo.h"
 #include "scope_timer.h"
-
-class MonteCarlo
-{
-public:
-	MonteCarlo(std::function<float(float)> f, std::function<float(float)> pdf)
-		: m_f(f), m_pdf(pdf)
-	{
-	}
-
-	auto estimate(int samples) -> std::pair<float, float>
-	{
-		float sum = 0.0f;
-		float sumSquared = 0.0f;
-		for (int i = 0; i < samples; i++)
-		{
-			float x = rejectionSample();
-			float y = m_f(x) / m_pdf(x);
-			sum += y;
-			sumSquared += y * y;
-		}
-
-		float mean = sum / samples;
-		float variance = (sumSquared / samples) - (mean * mean);
-		return { mean, variance };
-	}
-
-private:
-	auto rejectionSample() -> float
-	{
-		float max = m_pdf(1.0f);
-		while (true)
-		{
-			float x = dis(gen);
-			float u = dis(gen);
-			if (u * max <= m_pdf(x))
-				return x;
-		}
-	}
-
-	std::function<float(float)> m_f;	// Function to integrate
-	std::function<float(float)> m_pdf;	// Probability density function
-
-	std::random_device rd;
-	std::mt19937 gen{ rd() };
-	std::uniform_real_distribution<float> dis{ 0.0f, 1.0f };
-};
 
 template<size_t N>
 static void estimate(MonteCarlo& mc, std::array<int, N> sampleCounts)
@@ -67,7 +20,7 @@ static void estimate(MonteCarlo& mc, std::array<int, N> sampleCounts)
 
 auto main() -> int
 {
-	std::cout << "Monte Carlo Integration\n";
+	std::cout << "Monte Carlo Sampling\n";
 	std::cout << "------------------------\n";
 
 	auto f = [](float x) -> float
