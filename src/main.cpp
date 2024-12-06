@@ -9,12 +9,12 @@
 template<size_t N>
 static void estimate(MonteCarlo& mc, std::array<int, N> sampleCounts)
 {
-	ScopeTimer<std::chrono::milliseconds> timer;
 
 	for (auto samples : sampleCounts)
 	{
+		ScopeTimer<std::chrono::microseconds> timer;
 		auto [mean, variance] = mc.estimate(samples);
-		std::cout << std::format("{:>10} Samples - Estimate: {:<10} Variance: {:<10}\n", samples, mean, variance);
+		std::cout << std::format("{:>10} Samples \tEstimate: {:<10} \tVariance: {:<10}\t", samples, mean, variance);
 	}
 }
 
