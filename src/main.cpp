@@ -4,14 +4,14 @@
 #include <iostream>
 
 #include "monte_carlo.h"
-#include "scope_timer.h"
+#include "timer.h"
 
 template<size_t N>
 static void estimate(MonteCarlo& mc, std::array<int, N> sampleCounts)
 {
 	for (auto samples : sampleCounts)
 	{
-		ScopeTimer<std::chrono::microseconds> timer;
+		ScopeTimer timer;
 		auto [mean, variance] = mc.estimate(samples);
 		std::cout << std::format("{:>10} Samples \tEstimate: {:<10} \tVariance: {:<10}\t", samples, mean, variance);
 	}
