@@ -37,7 +37,7 @@ public:
 private:
 	auto rejectionSample() -> float
 	{
-		float max = m_pdf(1.0f);
+		float max = std::max(m_pdf(0.0f), m_pdf(1.0f));
 		while (true)
 		{
 			float x = dis(gen);

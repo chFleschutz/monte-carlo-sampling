@@ -20,7 +20,7 @@ static void estimate(MonteCarlo& mc, std::array<int, N> sampleCounts)
 auto main() -> int
 {
 	std::cout << "Monte Carlo Sampling\n";
-	std::cout << "------------------------\n";
+	std::cout << "--------------------\n";
 
 	auto f = [](float x) -> float
 		{
@@ -75,7 +75,7 @@ auto main() -> int
 
 	std::cout << "\nPerfect PDF\n";
 	{
-		auto perfect_pdf = f;
+		auto perfect_pdf = f; // Perfect PDF is: f / Integral01(f) (here: f / 1)
 		MonteCarlo mc(f, perfect_pdf);
 		estimate(mc, sampleCounts);
 	}
